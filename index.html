@@ -3,25 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Picker - 음식 선택기</title>
+    <title>푸드피커 - 랜덤 메뉴 추천</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
-        <h1>Food Picker</h1>
+        <div class="header-content"> 푸드피커 - 랜덤 메뉴 추천 </div>
     </header>
-
     <main>
         <section id="home" class="container">
-            <h2>오늘 뭐 먹을까?</h2>
+            <div class="nation">
+            <div class="selection-title">나라를 선택하세요 </div>
+            <div class="button-grid">
+                <button class="toggle-button">
+                    <img src="assets/all.png" alt="아이콘 1" class="button-icon">
+                    <span>전체</span>
+                </button>
+                <button class="toggle-button">
+                    <img src="assets/kr.png" alt="아이콘 2" class="button-icon">
+                    <span>한식</span>
+                </button>
+                <button class="toggle-button">
+                    <img src="assets/jp.png" alt="아이콘 3" class="button-icon">
+                    <span>일식</span>
+                </button>
+                <button class="toggle-button">
+                    <img src="assets/cn.png" alt="아이콘 4" class="button-icon">
+                    <span>중식</span>
+                </button>
+                <button class="toggle-button">
+                    <img src="assets/oc.png" alt="아이콘 5" class="button-icon">
+                    <span>양식</span>
+                </button>
+                <button class="toggle-button">
+                    <img src="assets/asia.png" alt="아이콘 6" class="button-icon">
+                    <span>아시아</span>
+                </button>
+            </div>
+            </div>
+            <div class="style">
+                <div class="selection-title">종류를 선택하세요 </div>
+                <div class="button-grid">
+                    <button class="toggle-button">
+                        <img src="assets/all.png" alt="아이콘 1" class="button-icon">
+                        <span>전체</span>
+                    </button>
+                    <button class="toggle-button">
+                        <img src="assets/rice.png" alt="아이콘 2" class="button-icon">
+                        <span>밥류</span>
+                    </button>
+                    <button class="toggle-button">
+                        <img src="assets/noodle.png" alt="아이콘 3" class="button-icon">
+                        <span>면류</span>
+                    </button>
+                </div>
+                </div>
             <div class="food-selector">
-                <button id="randomButton">랜덤 음식 고르기</button>
+                <button id="randomButton">추천 받기</button>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 Food Picker. All rights reserved.</p>
+        <p>&copy; 2025 YOHANUX. All rights reserved.</p>
     </footer>
 
     <script src="js/main.js"></script>

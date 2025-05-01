@@ -25,4 +25,11 @@ function getRandomFood() {
 randomButton.addEventListener('click', () => {
     const selectedFood = getRandomFood();
     alert(`오늘의 추천 음식은 "${selectedFood}" 입니다!`);
+});
+
+// 토글 버튼 기능 추가
+document.querySelectorAll('.toggle-button').forEach(button => {
+    button.addEventListener('click', function() {
+        this.classList.toggle('active');
+    });
 }); 

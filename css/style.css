@@ -9,50 +9,254 @@ body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF; /* 라이트 모드 배경색 */
+}
+
+/* 공통 최대 너비 컨테이너 스타일 */
+.width-container {
+    margin: 0 auto;
+    width: 100%;
 }
 
 /* 헤더 스타일 */
 header {
-    background-color: #FF5500;
-    color: white;
-    padding: 1.5rem;
-    text-align: center;
+    height: 64px;
+    font-size: 24px;
+    font-weight: 700;
+    align-items: center;
+    border-bottom: 1px solid #E0E0E0;
+    color: #000000;
+    display: flex;          /* Flexbox 사용 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    width: 100%;
+}
+
+/* 헤더 내부 컨테이너 */
+.header-content {
+    max-width: 640px;
+    width: 100%;
 }
 
 /* 메인 컨텐츠 스타일 */
+main {
+    flex: 1;
+}
+
+/* 메인 컨테이너 스타일 */
 .container {
-    max-width: 1200px;
+    max-width: 640px;
     margin: 0 auto;
-    padding: 2rem;
+    width: 100%;
     text-align: center;
+    padding-top: 40px;
 }
 
+/* 음식 선택기 영역 스타일 수정 */
 .food-selector {
-    margin-top: 2rem;
+    padding-top: 24px;
+    width: 100%;
 }
 
-button {
+/* 추천받기 버튼 스타일 */
+#randomButton {
+    width: 100%; /* 부모 컨테이너의 전체 너비 사용 */
+    max-width: 1200px;
     background-color: #FF5500;
     color: white;
     border: none;
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-    border-radius: 5px;
+    height: 56px;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-button:hover {
+#randomButton:hover {
     background-color: #E64D00;
 }
 
-/* 푸터 스타일 */
+/* 푸터 스타일 수정 */
 footer {
-    background-color: #f8f9fa;
-    color: #666;
     text-align: center;
     padding: 1rem;
     position: fixed;
     bottom: 0;
     width: 100%;
+    height: 60px;
+    border-top: 1px solid #E0E0E0; /* 라이트 모드 구분선 */
+    color: #666;
+}
+
+/* 디버깅용 스타일 */
+.debug-mode header {
+    background-color: transparent !important;
+}
+
+.debug-mode main {
+    background-color: #99FF99 !important;
+}
+
+.debug-mode .container {
+    background-color: #9999FF !important;
+}
+
+.debug-mode .food-selector {
+    background-color: #FFFF99 !important;
+}
+
+.debug-mode .ad-section {
+    background-color: #FF99FF !important;
+}
+
+.debug-mode footer {
+    background-color: transparent !important;
+}
+
+/* 디버깅용 테두리 추가 */
+.debug-mode * {
+    border: 1px dashed rgba(0, 0, 0, 0.2);
+}
+
+/* 디버깅용 레이블 추가 */
+.debug-mode header::before,
+.debug-mode main::before,
+.debug-mode .container::before,
+.debug-mode .food-selector::before,
+.debug-mode .ad-section::before,
+.debug-mode footer::before {
+    content: attr(class);
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 12px;
+    padding: 2px 5px;
+    border-radius: 0 0 4px 0;
+}
+
+/* 상대 위치 설정 */
+.debug-mode header,
+.debug-mode main,
+.debug-mode .container,
+.debug-mode .food-selector,
+.debug-mode .ad-section,
+.debug-mode footer {
+    position: relative;
+}
+
+/* 선택 타이틀 스타일 */
+.selection-title {
+    font-size: 17px;
+    font-weight: 500;
+    color: #000000;
+    text-align: left;
+    padding-bottom: 24px;
+}
+
+/* 버튼 그리드 스타일 수정 */
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 0 auto;
+    padding-bottom: 24px;
+}
+
+/* 토글 버튼 기본 스타일 */
+.toggle-button {
+    background-color: #F5F5F5; /* 라이트 모드 배경색 */
+    border: none;
+    height: 88px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 16px;
+    color: #31383F;
+    
+    /* 내부 컨텐츠 정렬 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 12px;
+}
+
+.toggle-button:hover {
+    background-color: rgba(255, 85, 0, 0.1)
+}
+
+.toggle-button.active:hover {
+    background-color: rgba(255, 85, 0, 0.1)
+}
+
+/* 버튼 텍스트 스타일 */
+.toggle-button span {
+    font-size: 17px;
+    font-weight: 400; /* Regular */
+    transition: font-weight 0.3s ease;
+}
+
+/* 버튼 아이콘 스타일 */
+.button-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+/* 토글 버튼 활성화 상태 */
+.toggle-button.active {
+    border: 1.5px solid #EDEDED;
+}
+
+/* 활성화 상태의 텍스트 스타일 */
+.toggle-button.active span {
+    font-weight: 500; /* Medium */
+}
+
+/* 라이트 모드에서의 활성화 상태 */
+@media (prefers-color-scheme: light) {
+    .toggle-button.active {
+        border-color: #222222;
+    }
+}
+
+/* 다크 모드 대응 */
+@media (prefers-color-scheme: dark) {
+    /* 전체 사이트 배경색 */
+    body {
+        background-color: #1E1E1E;
+    }
+
+    /* 토글 버튼 배경색 */
+    .toggle-button {
+        background-color: #292929;
+        color: #FFFFFF;
+    }
+
+    /* 활성화된 토글 버튼은 동일한 배경색 유지 */
+    .toggle-button.active {
+        background-color: #292929;
+    }
+
+    header {
+        color: #FFFFFF;
+        border-bottom-color: #333333;
+    }
+
+    footer {
+        border-top-color: #333333; /* 다크 모드 구분선 */
+    }
+
+    .header-content {
+        color: #FFFFFF;
+    }
+
+    .selection-title {
+        color: #FFFFFF;
+    }
 } 
