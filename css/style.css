@@ -79,16 +79,15 @@ main {
     background-color: #E64D00;
 }
 
-/* 푸터 스타일 수정 */
+/* 푸터 스타일 수정 - position: fixed 제거 */
 footer {
     text-align: center;
     padding: 1rem;
-    position: fixed;
-    bottom: 0;
     width: 100%;
     height: 60px;
-    border-top: 1px solid #E0E0E0; /* 라이트 모드 구분선 */
+    border-top: 1px solid #E0E0E0;
     color: #666;
+    margin-top: 40px; /* 추천받기 버튼과의 간격 */
 }
 
 /* 디버깅용 스타일 */
@@ -225,6 +224,39 @@ footer {
     }
 }
 
+/* 토글 버튼 호버 스타일 - 데스크톱 환경에서만 적용 */
+@media screen and (min-width: 810px) {
+    .toggle-button:hover {
+        background-color: rgba(255, 85, 0, 0.1);
+    }
+
+    .toggle-button.active:hover {
+        background-color: rgba(255, 85, 0, 0.1);
+    }
+}
+
+/* 809px 이하에서의 반응형 스타일 */
+@media screen and (max-width: 809px) {
+    .header-content {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    /* 모바일 환경에서 호버 효과 제거 */
+    .toggle-button:hover {
+        background-color: initial;
+    }
+
+    .toggle-button.active:hover {
+        background-color: #292929; /* 다크모드에서의 기본 배경색 유지 */
+    }
+}
+
 /* 다크 모드 대응 */
 @media (prefers-color-scheme: dark) {
     /* 전체 사이트 배경색 */
@@ -249,7 +281,7 @@ footer {
     }
 
     footer {
-        border-top-color: #333333; /* 다크 모드 구분선 */
+        border-top-color: #333333;
     }
 
     .header-content {
@@ -259,4 +291,11 @@ footer {
     .selection-title {
         color: #FFFFFF;
     }
-} 
+
+    /* 모바일 환경에서 다크모드 호버 효과 제거 */
+    @media screen and (max-width: 809px) {
+        .toggle-button.active:hover {
+            background-color: #292929;
+        }
+    }
+}
