@@ -220,7 +220,7 @@ footer {
 /* 라이트 모드에서의 활성화 상태 */
 @media (prefers-color-scheme: light) {
     .toggle-button.active {
-        border-color: #222222;
+        border-color: #666666;
     }
 }
 
@@ -297,5 +297,31 @@ footer {
         .toggle-button.active:hover {
             background-color: #292929;
         }
+    }
+}
+
+/* 결과 텍스트 스타일 */
+.result-text {
+    display: none; /* 기본적으로 숨김 처리 */
+    margin-top: 24px;
+    background-color: rgba(255, 85, 0, 0.1);
+    font-size: 24px;
+    font-weight: 700;
+    color: #000000;
+    border: 1.5px solid rgba(255, 85, 0, 0.1);
+    padding: 16px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+/* 결과 표시 시 적용될 스타일 */
+.result-text.show {
+    display: block;
+}
+
+/* 다크 모드 대응 */
+@media (prefers-color-scheme: dark) {
+    .result-text {
+        color: #FFFFFF;
     }
 }
