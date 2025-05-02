@@ -209,7 +209,7 @@ footer {
 
 /* 토글 버튼 활성화 상태 */
 .toggle-button.active {
-    border: 1.5px solid #EDEDED;
+    border: 2px solid #EDEDED;
 }
 
 /* 활성화 상태의 텍스트 스타일 */
@@ -220,7 +220,7 @@ footer {
 /* 라이트 모드에서의 활성화 상태 */
 @media (prefers-color-scheme: light) {
     .toggle-button.active {
-        border-color: #666666;
+        border-color: #999999;
     }
 }
 
