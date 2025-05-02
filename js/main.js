@@ -142,39 +142,61 @@ const resultText = document.getElementById('resultText');
 const nationButtons = document.querySelectorAll('.nation .toggle-button');
 const styleButtons = document.querySelectorAll('.style .toggle-button');
 
-// 선택된 필터 가져오기
-function getActiveFilters() {
-    const nationButton = document.querySelector('.nation .toggle-button.active');
-    const styleButton = document.querySelector('.style .toggle-button.active');
-    
-    const nation = nationButton ? nationButton.querySelector('span').textContent : '전체';
-    const style = styleButton ? styleButton.querySelector('span').textContent : '전체';
-    
-    return { nation, style };
+// 토글 버튼 로직 (중복 선택/전체 버튼 예외 처리)
+function setupMultiToggleButtons(buttons) {
+    const btnArr = Array.from(buttons);
+    const allBtn = btnArr[0]; // 첫 번째가 전체 버튼
+
+    btnArr.forEach((btn, idx) => {
+        btn.addEventListener('click', function() {
+            if (idx === 0) {
+                // 전체 버튼 클릭: 전체만 on, 나머지 off
+                btnArr.forEach((b, i) => {
+                    if (i === 0) b.classList.add('active');
+                    else b.classList.remove('active');
+                });
+            } else {
+                // 전체 버튼 off, 해당 버튼 토글
+                allBtn.classList.remove('active');
+                btn.classList.toggle('active');
+                // 전체 외 버튼이 모두 off면 전체 버튼 on
+                const anyActive = btnArr.slice(1).some(b => b.classList.contains('active'));
+                if (!anyActive) allBtn.classList.add('active');
+            }
+            hideResult();
+        });
+    });
 }
 
-// 카테고리 매핑
-const categoryMapping = {
-    '전체': 'all',
-    '한식': '한식',
-    '일식': '일식',
-    '중식': '중식',
-    '양식': '양식',
-    '아시아': '아시아'
-};
+// 여러 개의 active 값을 반환하는 함수
+function getActiveFiltersMulti() {
+    // nation
+    const nationBtns = document.querySelectorAll('.nation .toggle-button');
+    const nationActive = [];
+    nationBtns.forEach((btn, idx) => {
+        if (btn.classList.contains('active')) {
+            nationActive.push(btn.querySelector('span').textContent);
+        }
+    });
+    // style
+    const styleBtns = document.querySelectorAll('.style .toggle-button');
+    const styleActive = [];
+    styleBtns.forEach((btn, idx) => {
+        if (btn.classList.contains('active')) {
+            styleActive.push(btn.querySelector('span').textContent);
+        }
+    });
+    return { nation: nationActive, style: styleActive };
+}
 
-const ingredientMapping = {
-    '전체': 'all',
-    '밥류': '밥류',
-    '면류': '면류'
-};
-
-// 필터링된 음식 목록 가져오기
-function getFilteredFoods(filters) {
+// 여러 active 값 필터링
+function getFilteredFoodsMulti(filters) {
     return foodList.filter(food => {
-        const categoryMatch = filters.nation === '전체' || food.category === categoryMapping[filters.nation];
-        const ingredientMatch = filters.style === '전체' || food.ingredient === ingredientMapping[filters.style];
-        return categoryMatch && ingredientMatch;
+        const nationAll = filters.nation.includes('전체');
+        const nationMatch = nationAll || filters.nation.includes(food.category);
+        const styleAll = filters.style.includes('전체');
+        const styleMatch = styleAll || filters.style.includes(food.ingredient);
+        return nationMatch && styleMatch;
     });
 }
 
@@ -185,66 +207,31 @@ function getRandomFood(foods) {
 }
 
 // 결과 텍스트 표시/숨김 함수
-function showResult(text) {
-    resultText.textContent = text;
+function showResult(foodName) {
+    resultText.innerHTML = `<span style="color:#FF5500">${foodName}</span> 어때요?`;
     resultText.classList.add('show');
 }
-
 function hideResult() {
     resultText.classList.remove('show');
 }
 
-// 버튼 클릭 이벤트
+// 추천받기 버튼 클릭 이벤트
 randomButton.addEventListener('click', () => {
-    const filters = getActiveFilters();
-    const filteredFoods = getFilteredFoods(filters);
-    
+    const filters = getActiveFiltersMulti();
+    const filteredFoods = getFilteredFoodsMulti(filters);
+
     if (filteredFoods.length === 0) {
         showResult('해당하는 메뉴가 없습니다.');
         return;
     }
-    
     const selectedFood = getRandomFood(filteredFoods);
-    showResult(`${selectedFood.name} 어때요?`);
+    showResult(selectedFood.name);
 });
 
-// 토글 버튼 기능 수정
-function setupToggleButtons(buttons) {
-    buttons.forEach(button => {
-        button.addEventListener('click', function() {
-            // 같은 그룹의 다른 버튼들의 active 클래스 제거
-            const parent = this.closest('.nation, .style');
-            parent.querySelectorAll('.toggle-button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            // 현재 버튼 활성화
-            this.classList.add('active');
-            
-            // 결과 텍스트 숨김
-            hideResult();
-        });
-    });
-}
+// nation/style 토글 버튼 모두에 적용
+setupMultiToggleButtons(nationButtons);
+setupMultiToggleButtons(styleButtons);
 
-// 초기화 시 결과 텍스트 숨김 상태로 시작
-function initialize() {
-    try {
-        // ... 기존 초기화 코드 ...
-        
-        // 결과 텍스트 초기 상태 설정
-        hideResult();
-        
-        // ... 나머지 초기화 코드 ...
-    } catch (error) {
-        console.error('Error during initialization:', error);
-        showResult('데이터를 불러오는 중 오류가 발생했습니다.');
-    }
-}
-
-// 토글 버튼 설정 적용
-setupToggleButtons(nationButtons);
-setupToggleButtons(styleButtons);
-
-// 초기 상태 설정 - '전체' 버튼 활성화
-document.querySelector('.nation .toggle-button').classList.add('active');
-document.querySelector('.style .toggle-button').classList.add('active'); 
+// 초기 상태: 전체 버튼만 active
+nationButtons[0].classList.add('active');
+styleButtons[0].classList.add('active'); 
